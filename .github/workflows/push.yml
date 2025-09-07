@@ -1,0 +1,28 @@
+name: 课前10分钟提醒
+on:
+  schedule:
+    - cron: '*/5 * * * *'  # 每5分钟检查一次（覆盖所有可能的上课时间）
+  workflow_dispatch:  # 允许手动触发
+
+jobs:
+  push-reminder:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 拉取代码
+        uses: actions/checkout@v4
+
+      - name: 设置Python环境
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.9'
+
+      - name: 安装依赖
+        run: pip install requests
+
+      - name: 执行推送脚本
+        env:
+          WECHAT_APPID: ${{ secrets.WECHAT_APPID }}
+          WECHAT_APPSECRET: ${{ secrets.WECHAT_APPSECRET }}
+          WECHAT_OPENID: ${{ secrets.WECHAT_OPENID }}
+          WECHAT_TEMPLATE_ID: ${{ secrets.WECHAT_TEMPLATE_ID }}
+        run: python push_reminder.py
