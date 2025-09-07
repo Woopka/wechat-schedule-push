@@ -2,6 +2,7 @@ import requests
 import json
 from datetime import datetime, timedelta
 import os
+import pytz  # 用于时区处理
 
 # 微信测试号配置（从环境变量获取）
 APPID = os.getenv("WECHAT_APPID")
@@ -23,32 +24,24 @@ def get_access_token():
         raise Exception(f"获取access_token失败：{result}")
 
 def get_current_course():
-    """获取当前时间应该提醒的课程（课前10分钟）"""
-    # 当前时间 + 10分钟 = 课程开始时间
-    target_time = datetime.now() + timedelta(minutes=10)
-    target_str = target_time.strftime("%H:%M")
-    today = datetime.now().strftime("%A")
+    """获取当前北京时间应该提醒的课程（课前10分钟）"""
+    # 设置时区为北京时间（UTC+8）
+    beijing_tz = pytz.timezone('Asia/Shanghai')
+    now = datetime.now(beijing_tz)  # 获取当前北京时间
     
-    # 转换星期为中文（GitHub Actions运行环境为英文）
-    weekday_map = {
-        "Monday": "星期一",
-        "Tuesday": "星期二",
-        "Wednesday": "星期三",
-        "Thursday": "星期四",
-        "Friday": "星期五",
-        "Saturday": "星期六",
-        "Sunday": "星期日"
-    }
-    today_cn = weekday_map.get(today, "")
-    if not today_cn:
-        return None
+    # 计算目标时间：当前时间 + 10分钟（即课程开始时间）
+    target_time = now + timedelta(minutes=10)
+    target_str = target_time.strftime("%H:%M")  # 格式化为"HH:MM"
+    
+    # 获取当前星期（中文）
+    weekday_cn = ["星期一", "星期二", "星期三", "星期四", "星期五", "星期六", "星期日"][now.weekday()]
     
     # 读取课表并匹配
     with open("schedule.json", "r", encoding="utf-8") as f:
         schedule = json.load(f)
     
-    for course in schedule.get(today_cn, []):
-        # 连堂课程只在第一节开始前提醒
+    # 查找当前需要提醒的课程（连堂课程只在第一节前提醒）
+    for course in schedule.get(weekday_cn, []):
         if course["startTime"] == target_str:
             return course
     return None
