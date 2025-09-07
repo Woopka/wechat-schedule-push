@@ -1,0 +1,163 @@
+{
+  "星期一": [
+    {
+      "course": "刑法学（下）003",
+      "weeks": "1-16周",
+      "sections": "1-2节",
+      "building": "致远楼（原田家炳A栋）",
+      "room": "212",
+      "teacher": "左勇",
+      "startTime": "08:00",
+      "endTime": "09:30"
+    },
+    {
+      "course": "劳动与社会保障法学 003",
+      "weeks": "1-16周",
+      "sections": "3-4节",
+      "building": "致远楼（原田家炳A栋）",
+      "room": "307",
+      "teacher": "杨焱",
+      "startTime": "09:45",
+      "endTime": "11:15"
+    },
+    {
+      "course": "形势与政策II 129",
+      "weeks": "11-18周",
+      "sections": "6-7节",
+      "building": "致远楼（原田家炳A栋）",
+      "room": "213",
+      "teacher": "林玲",
+      "startTime": "15:00",
+      "endTime": "16:30"
+    },
+    {
+      "course": "毛泽东思想和中国特色社会主义理论体系概论 122",
+      "weeks": "1-18周",
+      "sections": "10-12节",
+      "building": "修业楼（原田家炳C栋）",
+      "room": "304",
+      "teacher": "张勇",
+      "startTime": "19:30",
+      "endTime": "21:50"
+    }
+  ],
+  "星期二": [
+    {
+      "course": "体育与健康III 037",
+      "weeks": "1-4,7-18周",
+      "sections": "3-4节",
+      "building": "灯光球场",
+      "room": "",
+      "teacher": "全彦秀",
+      "startTime": "09:45",
+      "endTime": "11:15"
+    }
+  ],
+  "星期三": [
+    {
+      "course": "大学外语III 115",
+      "weeks": "1-18周",
+      "sections": "1-2节",
+      "building": "宁静楼（原田家炳B栋）",
+      "room": "601",
+      "teacher": "王新然",
+      "startTime": "08:00",
+      "endTime": "09:30"
+    },
+    {
+      "course": "民法学（下）003",
+      "weeks": "1-16周",
+      "sections": "3-5节",
+      "building": "致远楼（原田家炳A栋）",
+      "room": "208",
+      "teacher": "袁合川",
+      "startTime": "09:45",
+      "endTime": "12:05"
+    },
+    {
+      "course": "大学外语限定必修 044",
+      "weeks": "1-18周",
+      "sections": "6-7节",
+      "building": "宁静楼（原田家炳B栋）",
+      "room": "603",
+      "teacher": "何晓宇",
+      "startTime": "15:00",
+      "endTime": "16:30"
+    },
+    {
+      "course": "马克思主义基本原理 068",
+      "weeks": "1-18周",
+      "sections": "10-12节",
+      "building": "修业楼（原田家炳C栋）",
+      "room": "404",
+      "teacher": "胡小恒",
+      "startTime": "19:30",
+      "endTime": "21:50"
+    }
+  ],
+  "星期四": [
+    {
+      "course": "刑事诉讼法学 003",
+      "weeks": "1-16周",
+      "sections": "1-2节",
+      "building": "致远楼（原田家炳A栋）",
+      "room": "212",
+      "teacher": "刘谊",
+      "startTime": "08:00",
+      "endTime": "09:30"
+    },
+    {
+      "course": "民事诉讼法学 003",
+      "weeks": "1-16周",
+      "sections": "3-4节",
+      "building": "致远楼（原田家炳A栋）",
+      "room": "307",
+      "teacher": "李兰",
+      "startTime": "09:45",
+      "endTime": "11:15"
+    },
+    {
+      "course": "法律逻辑学 003",
+      "weeks": "1-16周",
+      "sections": "6-7节",
+      "building": "致远楼（原田家炳A栋）",
+      "room": "212",
+      "teacher": "罗苟新",
+      "startTime": "15:00",
+      "endTime": "16:30"
+    },
+    {
+      "course": "刑法学（下）003",
+      "weeks": "1-16周",
+      "sections": "8-9节",
+      "building": "致远楼（原田家炳A栋）",
+      "room": "307",
+      "teacher": "左勇",
+      "startTime": "16:40",
+      "endTime": "18:10"
+    }
+  ],
+  "星期五": [
+    {
+      "course": "民事诉讼法学 003",
+      "weeks": "1-16周",
+      "sections": "1-2节",
+      "building": "致远楼（原田家炳A栋）",
+      "room": "307",
+      "teacher": "李兰",
+      "startTime": "08:00",
+      "endTime": "09:30"
+    },
+    {
+      "course": "刑事诉讼法学 003",
+      "weeks": "1-16周",
+      "sections": "3-4节",
+      "building": "致远楼（原田家炳A栋）",
+      "room": "212",
+      "teacher": "刘谊",
+      "startTime": "09:45",
+      "endTime": "11:15"
+    }
+  ]
+}
+    
