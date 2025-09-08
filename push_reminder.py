@@ -43,8 +43,6 @@ def get_current_course():
         # 解析课程开始时间
         start_time = datetime.strptime(course["startTime"], "%H:%M").time()
         start_datetime = datetime.combine(now.date(), start_time).replace(tzinfo=beijing_tz)
-        print(f"开始时间（仅时分）: {start_time.strftime('%H:%M')}")
-        print(f"带日期和时区的完整开始时间: {start_datetime.strftime('%Y-%m-%d %H:%M:%S %Z%z')}")
         # 计算距离开课的分钟数
         time_diff = (start_datetime - now).total_seconds() / 60
         
@@ -68,9 +66,9 @@ def send_reminder(reminder_info):
     
     # 根据距离开课时间设置不同的提醒内容
     if 30 <= minutes_until_start <= 60:  # 30-60分钟
-        reminder_text = f"距离上课还有{int(minutes_until_start)}分钟"
+        reminder_text = f"距离上课还有{minutes_until_start}分钟"
     else:  # 小于30分钟
-        reminder_text = f"距离上课还有{int(minutes_until_start)}分钟，请尽快前往对应教室"
+        reminder_text = f"距离上课还有{minutes_until_start}分钟，请尽快前往对应教室"
     
     access_token = get_access_token()
     data = {
