@@ -42,9 +42,9 @@ def get_current_course():
     for course in schedule.get(weekday_cn, []):
         # 解析课程开始时间
         start_time = datetime.strptime(course["startTime"], "%H:%M").time()
-        start_datetime = datetime.combine(now.date(), start_time).replace(tzinfo=beijing_tz)
+        start_datetime = datetime.combine(now.date(), start_time)
         # 计算距离开课的分钟数
-        time_diff = (start_time - now).total_seconds() / 60
+        time_diff = (start_datetime - now).total_seconds() / 60
         
         # 只处理未来30-60分钟或30分钟内的课程
         if 0 < time_diff <= 60:  # 新增：大于0且小于等于60分钟才提醒
