@@ -30,8 +30,8 @@ def get_current_course():
     now = datetime.now(beijing_tz)  # 获取当前北京时间
     print(f"=== 调试：当前北京时间 ===")
     print(f"当前时间：{now.strftime('%Y-%m-%d %H:%M:%S')}")
-    print(f"时间差（秒）：{(start_dateTime - now).total_seconds()}")
-    print(f"时间差（分钟）：{(start_dateTime - now).total_seconds() / 60}")
+    print(f"时间差（秒）：{(startTime - now).total_seconds()}")
+    print(f"时间差（分钟）：{(startTime - now).total_seconds() / 60}")
     # 获取当前星期（中文）
     weekday_cn = ["星期一", "星期二", "星期三", "星期四", "星期五", "星期六", "星期日"][now.weekday()]
     
