@@ -8,7 +8,7 @@ import pytz  # 用于时区处理
 APPID = os.getenv("WECHAT_APPID")
 APPSECRET = os.getenv("WECHAT_APPSECRET")
 OPENID = os.getenv("WECHAT_OPENID")
-TEMPLATE_ID = os.getenv("WECHAT_TEMPLATE_ID")
+TEMPLATE_ID = os.getenv("WECHAT_TEMPLATE_ID")  # 需确保此模板已新增quote字段
 
 # 一句话API地址
 QUOTE_API_URL = "https://likeyanglan.top/api"
@@ -78,13 +78,13 @@ def send_reminder(reminder_info):
     minutes_until_start = reminder_info["minutes_until_start"]
     
     # 获取一句话内容
-    daily_quote = get_daily_quote()
+    daily_quote = get_daily_quote()  
     
-    # 根据距离开课时间设置不同的提醒内容，加入一句话
+    # 根据距离开课时间设置不同的提醒内容（保留原有逻辑）
     if 30 <= minutes_until_start <= 60:  # 30-60分钟
-        reminder_text = f"距离上课还有{int(minutes_until_start)}分钟\n{daily_quote}"
+        reminder_text = f"距离上课还有{int(minutes_until_start)}分钟"
     else:  # 小于30分钟
-        reminder_text = f"距离上课还有{int(minutes_until_start)}分钟，请尽快前往对应教室\n{daily_quote}"
+        reminder_text = f"距离上课还有{int(minutes_until_start)}分钟，请尽快前往对应教室"
     
     access_token = get_access_token()
     data = {
@@ -94,7 +94,9 @@ def send_reminder(reminder_info):
             "course": {"value": course["course"], "color": "#173177"},
             "time": {"value": f"{course['startTime']}-{course['endTime']}", "color": "#173177"},
             "location": {"value": f"{course['building']}{course['room']}", "color": "#173177"},
-            "reminder": {"value": reminder_text, "color": "#ff0000" if minutes_until_start < 30 else "#173177"}
+            "reminder": {"value": reminder_text, "color": "#ff0000" if minutes_until_start < 30 else "#173177"},
+            # 最小改动：新增quote字段，复用daily_quote内容，配色可选浅灰色
+            "quote": {"value": daily_quote, "color": "#666666"}
         }
     }
     
@@ -116,7 +118,7 @@ if __name__ == "__main__":
         print(f"发现课程：{course['course']}")
         print(f"开课时间：{course['startTime']}")
         print(f"距离开课：{int(minutes)}分钟")
-        
+        print(f"待发送一句话：{get_daily_quote()}")  # 新增调试：确认一句话内容
         send_reminder(reminder_info)
     else:
         print("当前无需要提醒的课程（只提醒1小时内的课程）")
