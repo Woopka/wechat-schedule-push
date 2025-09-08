@@ -28,6 +28,8 @@ def get_current_course():
     # 设置时区为北京时间（UTC+8）
     beijing_tz = pytz.timezone('Asia/Shanghai')
     now = datetime.now(beijing_tz)  # 获取当前北京时间
+    print(f"=== 调试：当前北京时间 ===")
+    print(f"当前时间：{now.strftime('%Y-%m-%d %H:%M:%S')}")
     
     # 获取当前星期（中文）
     weekday_cn = ["星期一", "星期二", "星期三", "星期四", "星期五", "星期六", "星期日"][now.weekday()]
