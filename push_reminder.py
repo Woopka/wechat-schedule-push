@@ -10,6 +10,9 @@ APPSECRET = os.getenv("WECHAT_APPSECRET")
 OPENID = os.getenv("WECHAT_OPENID")
 TEMPLATE_ID = os.getenv("WECHAT_TEMPLATE_ID")
 
+# 一句话API地址
+QUOTE_API_URL = "https://likeyanglan.top/api"
+
 # 微信接口URL
 TOKEN_URL = f"https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid={APPID}&secret={APPSECRET}"
 PUSH_URL = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token={}"
@@ -22,6 +25,17 @@ def get_access_token():
         return result["access_token"]
     else:
         raise Exception(f"获取access_token失败：{result}")
+
+def get_daily_quote():
+    """获取一句话内容"""
+    try:
+        response = requests.get(QUOTE_API_URL, timeout=5)
+        result = response.json()
+        # 格式化为"句子--作者"
+        return f"{result['sentence']}--{result['source']}"
+    except Exception as e:
+        print(f"获取一句话失败：{str(e)}")
+        return "学习是一个持续的过程，每天进步一点点。--佚名"
 
 def get_current_course():
     """获取当前北京时间应该提醒的课程及距离开课的分钟数（仅处理1小时内的课程）"""
@@ -63,11 +77,14 @@ def send_reminder(reminder_info):
     course = reminder_info["course"]
     minutes_until_start = reminder_info["minutes_until_start"]
     
-    # 根据距离开课时间设置不同的提醒内容
+    # 获取一句话内容
+    daily_quote = get_daily_quote()
+    
+    # 根据距离开课时间设置不同的提醒内容，加入一句话
     if 30 <= minutes_until_start <= 60:  # 30-60分钟
-        reminder_text = f"距离上课还有{int(minutes_until_start)}分钟"
+        reminder_text = f"距离上课还有{int(minutes_until_start)}分钟\n{daily_quote}"
     else:  # 小于30分钟
-        reminder_text = f"距离上课还有{int(minutes_until_start)}分钟，请尽快前往对应教室"
+        reminder_text = f"距离上课还有{int(minutes_until_start)}分钟，请尽快前往对应教室\n{daily_quote}"
     
     access_token = get_access_token()
     data = {
