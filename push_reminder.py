@@ -24,7 +24,7 @@ def get_access_token():
         raise Exception(f"获取access_token失败：{result}")
 
 def get_current_course():
-    """获取当前北京时间应该提醒的课程及距离开课的分钟数（仅处理1小时内的课程）"""
+    """获取当前北京时间应该提醒的课程及距离开课的分钟数（仅处理1小时内的课程），修正时间差计算"""
     # 设置时区为北京时间（UTC+8）
     beijing_tz = pytz.timezone('Asia/Shanghai')
     now = datetime.now(beijing_tz)  # 获取当前北京时间
@@ -44,21 +44,20 @@ def get_current_course():
         start_time = datetime.strptime(course["startTime"], "%H:%M").time()
         start_datetime = datetime.combine(now.date(), start_time).replace(tzinfo=beijing_tz)
         
-        # 计算距离开课的分钟数
-        time_diff = (start_datetime - now).total_seconds() / 60
+        # 计算距离开课的时间差（带时区的datetime相减，得到timedelta）
+        time_diff = start_datetime - now
+        # 将时间差转换为分钟数，四舍五入取整
+        minutes_until_start = round(time_diff.total_seconds() / 60)
         
         # 只处理未来30-60分钟或30分钟内的课程
-        if 0 < time_diff <= 60:  # 新增：大于0且小于等于60分钟才提醒
-            # 返回课程信息和距离开课的分钟数
+        if 0 < minutes_until_start <= 60:  # 新增：大于0且小于等于60分钟才提醒
+            # 返回课程信息和距离开课的分钟数（取整后）
             return {
                 "course": course,
-                "minutes_until_start": time_diff
+                "minutes_until_start": minutes_until_start
             }
     
     return None
-    print(f"时间差（秒）：{(start_datetime - now).total_seconds()}")
-    print(f"时间差（分钟）：{(start_datetime - now).total_seconds() / 60}")
-
 
 def send_reminder(reminder_info):
     """发送模板消息提醒，根据距离开课时间显示不同内容"""
@@ -67,9 +66,9 @@ def send_reminder(reminder_info):
     
     # 根据距离开课时间设置不同的提醒内容
     if 30 <= minutes_until_start <= 60:  # 30-60分钟
-        reminder_text = f"距离上课还有{int(minutes_until_start)}分钟"
+        reminder_text = f"距离上课还有{minutes_until_start}分钟"
     else:  # 小于30分钟
-        reminder_text = f"距离上课还有{int(minutes_until_start)}分钟，请尽快前往对应教室"
+        reminder_text = f"距离上课还有{minutes_until_start}分钟，请尽快前往对应教室"
     
     access_token = get_access_token()
     data = {
@@ -100,7 +99,7 @@ if __name__ == "__main__":
         print(f"=== 调试信息 ===")
         print(f"发现课程：{course['course']}")
         print(f"开课时间：{course['startTime']}")
-        print(f"距离开课：{int(minutes)}分钟")
+        print(f"距离开课：{minutes}分钟")
         
         send_reminder(reminder_info)
     else:
