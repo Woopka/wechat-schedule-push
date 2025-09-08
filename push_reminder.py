@@ -55,10 +55,7 @@ def get_current_course():
             }
     
     return None
-    print(f"时间差（秒）：{(start_datetime - now).total_seconds()}")
-    print(f"时间差（分钟）：{(start_datetime - now).total_seconds() / 60}")
-
-
+    
 def send_reminder(reminder_info):
     """发送模板消息提醒，根据距离开课时间显示不同内容"""
     course = reminder_info["course"]
@@ -66,9 +63,9 @@ def send_reminder(reminder_info):
     
     # 根据距离开课时间设置不同的提醒内容
     if 30 <= minutes_until_start <= 60:  # 30-60分钟
-        reminder_text = f"距离上课还有{minutes_until_start}分钟"
+        reminder_text = f"距离上课还有{int(minutes_until_start)}分钟"
     else:  # 小于30分钟
-        reminder_text = f"距离上课还有{minutes_until_start}分钟，请尽快前往对应教室"
+        reminder_text = f"距离上课还有{int(minutes_until_start)}分钟，请尽快前往对应教室"
     
     access_token = get_access_token()
     data = {
