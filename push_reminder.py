@@ -43,9 +43,8 @@ def get_current_course():
         # 解析课程开始时间
         start_time = datetime.strptime(course["startTime"], "%H:%M").time()
         start_datetime = datetime.combine(now.date(), start_time).replace(tzinfo=beijing_tz)
-        print('start_time')
-        print('start_datetime')
-        
+        print(f"开始时间（仅时分）: {start_time.strftime('%H:%M')}")
+        print(f"带日期和时区的完整开始时间: {start_datetime.strftime('%Y-%m-%d %H:%M:%S %Z%z')}")
         # 计算距离开课的分钟数
         time_diff = (start_datetime - now).total_seconds() / 60
         
