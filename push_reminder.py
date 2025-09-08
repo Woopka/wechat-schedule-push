@@ -39,7 +39,7 @@ def get_current_course():
     # 查找需要提醒的课程（距离开课时间在1小时内）
     for course in schedule.get(weekday_cn, []):
         # 解析课程开始时间
-        start_time = datetime.strptime(course["starttime"], "%H:%M").time()
+        start_time = datetime.strptime(course["startTime"], "%H:%M").time()
         start_datetime = datetime.combine(now.date(), start_time).replace(tzinfo=beijing_tz)
         
         # 计算距离开课的分钟数
@@ -72,7 +72,7 @@ def send_reminder(reminder_info):
         "template_id": TEMPLATE_ID,
         "data": {
             "course": {"value": course["course"], "color": "#173177"},
-            "time": {"value": f"{course['starttime']}-{course['endTime']}", "color": "#173177"},
+            "time": {"value": f"{course['startTime']}-{course['endTime']}", "color": "#173177"},
             "location": {"value": f"{course['building']}{course['room']}", "color": "#173177"},
             "reminder": {"value": reminder_text, "color": "#ff0000" if minutes_until_start < 30 else "#173177"}
         }
@@ -94,7 +94,7 @@ if __name__ == "__main__":
         minutes = reminder_info["minutes_until_start"]
         print(f"=== 调试信息 ===")
         print(f"发现课程：{course['course']}")
-        print(f"开课时间：{course['starttime']}")
+        print(f"开课时间：{course['startTime']}")
         print(f"距离开课：{int(minutes)}分钟")
         
         send_reminder(reminder_info)
