@@ -42,7 +42,9 @@ def get_current_course():
     for course in schedule.get(weekday_cn, []):
         # 解析课程开始时间
         start_time = datetime.strptime(course["startTime"], "%H:%M").time()
+        print(f"start_time")
         start_datetime = datetime.combine(now.date(), start_time).replace(tzinfo=beijing_tz)
+        print(f"start_datetime")
         
         # 计算距离开课的分钟数
         time_diff = (start_datetime - now).total_seconds() / 60
