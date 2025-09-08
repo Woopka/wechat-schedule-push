@@ -24,14 +24,16 @@ def get_access_token():
         raise Exception(f"获取access_token失败：{result}")
 
 def get_current_course():
-    """获取当前北京时间应该提醒的课程（课前10分钟）"""
-    # 设置时区为北京时间（UTC+8）
-    beijing_tz = pytz.timezone('Asia/Shanghai')
-    now = datetime.now(beijing_tz)  # 获取当前北京时间
+    # 1. 强制设置为北京时间
+    beijing_tz = pytz.timezone("Asia/Shanghai")
+    now = datetime.now(beijing_tz)
+    print(f"=== 调试：当前北京时间 ===")
+    print(f"当前时间：{now.strftime('%Y-%m-%d %H:%M:%S')}")
     
-    # 计算目标时间：当前时间 + 10分钟（即课程开始时间）
+    # 2. 计算“当前时间+10分钟”（即课程开始时间）
     target_time = now + timedelta(minutes=10)
-    target_str = target_time.strftime("%H:%M")  # 格式化为"HH:MM"
+    target_time_str = target_time.strftime("%H:%M")
+    print(f"目标课程开始时间：{target_time_str}")
     
     # 获取当前星期（中文）
     weekday_cn = ["星期一", "星期二", "星期三", "星期四", "星期五", "星期六", "星期日"][now.weekday()]
